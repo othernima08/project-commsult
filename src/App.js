@@ -7,8 +7,13 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Kelompok:
         </p>
+        <ul>
+          <li>Desi Christine</li>
+          <li>Pijar Karisma</li>
+          <li>Yosafat Boyer</li>
+        </ul>
         <a
           className="App-link"
           href="https://reactjs.org"
