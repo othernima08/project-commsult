@@ -1,17 +1,17 @@
 .App {
-  text-align: center;
   margin-left: 20%;
   margin-right: 20%;
 }
 
 .Main-paper {
+  text-align: center;
   margin-top: 2rem;
-  padding-top: 2rem;
-  padding-bottom: 3rem;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
 }
 
 .App-title {
-  font-size: 3.5rem;
+  font-size: 3rem;
   font-weight: bold;
   color: white;
 }
@@ -22,8 +22,20 @@
 }
 
 .Input-paper {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  text-align: center;
+  margin-top: 5px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.Content-paper {
+  margin-top: 5px;
+  padding: 2rem;
+}
+
+#guests-text {
+  margin-top: 0rem;
+  margin-bottom: 0rem;
 }
 
 .App-logo {

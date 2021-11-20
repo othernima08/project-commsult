@@ -3,6 +3,9 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from "@mui/material/Checkbox";
 
 function App() {
   return (
@@ -24,9 +27,25 @@ function App() {
           noValidate
           autoComplete="off"
         >
-          <TextField id="standard-basic" label="Guest Name" variant="standard" />
+          <TextField
+            id="standard-basic"
+            label="Guest Name"
+            variant="standard"
+          />
           <TextField id="standard-basic" label="Guest Age" variant="standard" />
         </Box>
+      </Paper>
+
+      <Paper className="Content-paper" elevation={4}>
+        <div className="content">
+          <h1 id="guests-text">Guests</h1>
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Hide uncomfirmed guest"
+            />
+          </FormGroup>
+        </div>
       </Paper>
     </div>
   );
