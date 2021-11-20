@@ -1,5 +1,29 @@
 .App {
   text-align: center;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.Main-paper {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+.App-title {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+.App-subtitle {
+  font-size: 1.2rem;
+  color: white;
+}
+
+.Input-paper {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .App-logo {

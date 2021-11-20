@@ -1,28 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Kelompok:
-        </p>
-        <ul>
-          <li>Desi Christine</li>
-          <li>Pijar Karisma</li>
-          <li>Yosafat Boyer</li>
-        </ul>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <Paper
+        className="Main-paper"
+        elevation={4}
+        style={{ backgroundColor: "#3f51b5" }}
+      >
+        <div className="App-title">Guest List</div>
+        <div className="App-subtitle">Track your guest</div>
+      </Paper>
+      <Paper className="Input-paper" elevation={4}>
+        <Box
+          component="form"
+          sx={{
+            "& > :not(style)": { m: 1, width: "25ch" },
+          }}
+          noValidate
+          autoComplete="off"
         >
-          Learn React
-        </a>
-      </header>
+          <TextField id="standard-basic" label="Guest Name" variant="standard" />
+          <TextField id="standard-basic" label="Guest Age" variant="standard" />
+        </Box>
+      </Paper>
     </div>
   );
 }
