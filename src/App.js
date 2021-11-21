@@ -15,8 +15,17 @@ class App extends React.Component {
     this.state = {
       name: "",
       age: "",
+      attending: {},
+      // guestList: [
+      //   { id: 1, nama: "Pijar", age: "21" },
+      //   { id: 2, nama: "Desi", age: "22" },
+      // ],
+      guestArr: [{ "id": null, "nama": "", "umur": "", "timestamp": "" }],
+      guest: {},
     };
+
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   updateGuestName(name) {
@@ -25,15 +34,47 @@ class App extends React.Component {
     });
   }
 
-  updateGuestAge(age){
+  updateGuestAge(age) {
     this.setState({
       age: age.target.value,
     });
   }
 
-  handleSubmit(event) {
-    alert('A new guests was submitted: ' + this.state.name + ' | Age: ' + this.state.age);
+  handleChange = (e) => {
+    this.name = e.target.name;
+    this.value = e.target.value;
+    this.setState((prevState) => {
+      return {
+        guest: {
+          ...prevState.guest,
+          [this.name]: this.value,
+        },
+      };
+    });
+  };
+
+  handleSubmit = event => {
     event.preventDefault();
+    let lastGuest = this.state.guestArr[this.state.guestArr.length - 1];
+
+    this.setState((prevState) => {
+      const guestArr = prevState.guestArr.concat({
+        ...prevState.guest,
+        id: lastGuest.id + 1,
+      });
+      return {
+        guestArr,
+        guest: {},
+      };
+    });
+
+    // alert(
+    //   "A new guest was submitted: Name: " +
+    //     this.state.name +
+    //     " | Age: " +
+    //     this.state.age
+    // );
+   
   }
 
   render() {
@@ -61,17 +102,23 @@ class App extends React.Component {
               id="standard-basic"
               label="Guest Name"
               variant="standard"
-              value={this.state.name}
-              onChange={(name) => this.updateGuestName(name)}
+              name="nama"
+              value={this.state.guest.nama}
+              // onChange={(name) => this.updateGuestName(name)}
+              onChange={this.handleChange}
             />
             <TextField
               id="standard-basic"
               label="Guest Age"
               variant="standard"
-              value={this.state.age}
-              onChange={(age) => this.updateGuestAge(age)}
+              name="umur"
+              value={this.state.guest.umur}
+              // onChange={(age) => this.updateGuestAge(age)}
+              onChange={this.handleChange}
             />
-            <Button variant="contained" type="submit">SUBMIT</Button>
+            <Button variant="contained" type="submit">
+              SUBMIT
+            </Button>
           </Box>
         </Paper>
 
@@ -95,6 +142,15 @@ class App extends React.Component {
             </Grid>
             <h2>{this.state.name}</h2>
             <h2>{this.state.age}</h2>
+            <div>
+              {this.state.guestArr.map((guest) => (
+                <div key={guest.id}>
+                  <h3>{guest.id}</h3>
+                  <p>{guest.nama}</p>
+                  <p>{guest.umur}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </Paper>
       </div>
