@@ -3,9 +3,10 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import Typography from '@mui/material/Typography';
 
 function App() {
   return (
@@ -38,13 +39,22 @@ function App() {
 
       <Paper className="Content-paper" elevation={4}>
         <div className="content">
-          <h1 id="guests-text">Guests</h1>
-          <FormGroup>
-            <FormControlLabel
-              control={<Checkbox />}
-              label="Hide uncomfirmed guest"
-            />
-          </FormGroup>
+          <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <h1 id="guests-text">Guests</h1>
+            <FormGroup>
+              <FormControlLabel
+                control={<Checkbox />}
+                label="Hide uncomfirmed guest"
+              />
+            </FormGroup>
+          </Grid>
+          <Grid item xs={6} sx={{textAlign: 'right'}}>
+            <h4>Attending:</h4>
+            <h4>Uncomfirmed:</h4>
+            <h4>Total:</h4>
+          </Grid>
+          </Grid>
         </div>
       </Paper>
     </div>
