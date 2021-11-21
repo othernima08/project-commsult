@@ -22,6 +22,8 @@ class App extends React.Component {
       // ],
       guestArr: [{ "id": null, "nama": "", "umur": "", "timestamp": "" }],
       guest: {},
+      confirmed: 0,
+      unconfirmed: 0
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -54,6 +56,8 @@ class App extends React.Component {
   };
 
   handleSubmit = event => {
+    // alert('A new guests was submitted: ' + this.state.name + ' | Age: ' + this.state.age);
+    this.setState({unconfirmed: this.state.unconfirmed + 1});
     event.preventDefault();
     let lastGuest = this.state.guestArr[this.state.guestArr.length - 1];
 
@@ -67,14 +71,6 @@ class App extends React.Component {
         guest: {},
       };
     });
-
-    // alert(
-    //   "A new guest was submitted: Name: " +
-    //     this.state.name +
-    //     " | Age: " +
-    //     this.state.age
-    // );
-   
   }
 
   render() {
@@ -135,9 +131,9 @@ class App extends React.Component {
                 </FormGroup>
               </Grid>
               <Grid item xs={6} sx={{ textAlign: "right" }}>
-                <h4>Attending:</h4>
-                <h4>Uncomfirmed:</h4>
-                <h4>Total:</h4>
+                <h4>Confirmed:{this.state.confirmed}</h4>
+                <h4>Uncomfirmed:{this.state.unconfirmed}</h4>
+                <h4>Total:{this.state.confirmed + this.state.unconfirmed}</h4>
               </Grid>
             </Grid>
             <h2>{this.state.name}</h2>
@@ -151,6 +147,7 @@ class App extends React.Component {
                 </div>
               ))}
             </div>
+            <FormControlLabel control={<Checkbox />}label="Confirmed"/>
           </div>
         </Paper>
       </div>
