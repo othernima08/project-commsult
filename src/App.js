@@ -35,6 +35,7 @@ class App extends React.Component {
 
   handleSubmit(event) {
     alert('A new guests was submitted: ' + this.state.name + ' | Age: ' + this.state.age);
+    this.setState({unconfirmed: this.state.unconfirmed + 1});
     event.preventDefault();
   }
 
@@ -97,6 +98,7 @@ class App extends React.Component {
             </Grid>
             <h2>{this.state.name}</h2>
             <h2>{this.state.age}</h2>
+            <FormControlLabel control={<Checkbox />}label="Confirmed"/>
           </div>
         </Paper>
       </div>
