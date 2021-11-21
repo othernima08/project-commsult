@@ -15,6 +15,8 @@ class App extends React.Component {
     this.state = {
       name: "",
       age: "",
+      confirmed: 0,
+      unconfirmed: 0
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -88,9 +90,9 @@ class App extends React.Component {
                 </FormGroup>
               </Grid>
               <Grid item xs={6} sx={{ textAlign: "right" }}>
-                <h4>Attending:</h4>
-                <h4>Uncomfirmed:</h4>
-                <h4>Total:</h4>
+                <h4>Confirmed:{this.state.confirmed}</h4>
+                <h4>Uncomfirmed:{this.state.unconfirmed}</h4>
+                <h4>Total:{this.state.confirmed + this.state.unconfirmed}</h4>
               </Grid>
             </Grid>
             <h2>{this.state.name}</h2>
