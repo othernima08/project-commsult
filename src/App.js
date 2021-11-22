@@ -19,31 +19,11 @@ class App extends React.Component {
     this.state = {
       name: "",
       age: "",
-      attending: {},
-      // guestList: [
-      //   { id: 1, nama: "Pijar", age: "21" },
-      //   { id: 2, nama: "Desi", age: "22" },
-      // ],
-      guestArr: [
-        // {
-        //   id: null,
-        //   nama: "",
-        //   umur: "",
-        //   dateRegistered: null,
-        //   timeRegistered: null,
-        // },
-      ],
+      guestArr: [],
       guest: {},
       confirmed: 0,
       unconfirmed: 0,
       count: 1,
-      isSubmitted: false,
-      // isUpdate: [
-      //   {
-      //     id: null,
-      //     status: false,
-      //   },
-      // ],
       isUpdateId: null,
       isUpdateStatus: false,
     };
@@ -81,8 +61,6 @@ class App extends React.Component {
   };
 
   handleSubmit = (event) => {
-    // alert('A new guests was submitted: ' + this.state.name + ' | Age: ' + this.state.age);
-
     if (this.state.isUpdateStatus === true) {
       let id = this.state.isUpdateId;
       var guestArr = [...this.state.guestArr];
@@ -106,20 +84,6 @@ class App extends React.Component {
       });
 
       this.setState({ guestArr: newGuest });
-
-      // this.setState((prevState) => {
-      //   const guestArr = prevState.guestArr.concat({
-      //     ...prevState.guest,
-      //     id: lastGuest.id + 1,
-      //     dateRegistered: moment().format("DD-MM-YYYY"),
-      //     timeRegistered: moment().format("hh:mm:ss"),
-      //   });
-
-      //   return {
-      //     guestArr,
-      //     guest: {},
-      //   };
-      // });
     }
     this.setState({
       name: "",
@@ -129,11 +93,12 @@ class App extends React.Component {
   };
 
   handleDelete(id, name) {
-    alert("Remove guest " + name + "?");
+    alert("Guest " + name + " removed");
     this.setState((prevState) => {
       const guestArr = prevState.guestArr.filter((guest) => guest.id !== id);
       return { guestArr };
     });
+    this.setState({ unconfirmed: this.state.unconfirmed - 1 });
   }
 
   handleEdit = (id, name, age) => {
@@ -141,14 +106,6 @@ class App extends React.Component {
     this.setState({ age: age });
     this.setState({ isUpdateStatus: true });
     this.setState({ isUpdateId: id });
-  };
-
-  editSubmitted = (id) => {
-    var guestArr = [...this.state.guestArr];
-    var index = guestArr.findIndex((obj) => obj.id === id);
-    guestArr[index].nama = this.state.name;
-    guestArr[index].umur = this.state.age;
-    this.setState({ guestArr });
   };
 
   render() {
@@ -231,9 +188,6 @@ class App extends React.Component {
                 <h4>Total: {this.state.confirmed + this.state.unconfirmed}</h4>
               </Grid>
             </Grid>
-            {/* <h2>{this.state.name}</h2>
-            <h2>{this.state.age}</h2>
-            <p>{this.state.isUpdateStatus.toString()}</p> */}
           </div>
           {/* Guest Card */}
           <ImageList cols={3}>
@@ -252,26 +206,6 @@ class App extends React.Component {
               </ImageListItem>
             ))}
           </ImageList>
-
-          {/* Grid container spacing={2}>
-            <Grid item xs={4}>
-              <ListCard
-                value={this.state.guestArr}
-                handleDelete={this.handleDelete}
-                handleEdit={this.handleEdit}
-              />
-            </Grid>
-          </Grid> */}
-
-          {/* {this.state.guestArr.map((guest) => (
-            <div key={guest.id}>
-              <Grid container spacing={2}>
-              <Grid item xs={4}>
-                <ListCard value={this.state.guestArr} handleDelete={this.handleDelete} />
-              </Grid>
-          </Grid>
-            </div>
-          ))} */}
         </Paper>
       </div>
     );
