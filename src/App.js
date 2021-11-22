@@ -8,7 +8,8 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
-import moment from 'moment';
+import moment from "moment";
+import ListCard from "./ListCard";
 
 class App extends React.Component {
   constructor(props) {
@@ -21,10 +22,19 @@ class App extends React.Component {
       //   { id: 1, nama: "Pijar", age: "21" },
       //   { id: 2, nama: "Desi", age: "22" },
       // ],
-      guestArr: [{ id: null, nama: "", umur: "", dateRegistered: null, timeRegistered: null }],
+      guestArr: [
+        // {
+        //   id: null,
+        //   nama: "",
+        //   umur: "",
+        //   dateRegistered: null,
+        //   timeRegistered: null,
+        // },
+      ],
       guest: {},
       confirmed: 0,
       unconfirmed: 0,
+      isSubmitted: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -46,6 +56,7 @@ class App extends React.Component {
   handleChange = (e) => {
     this.name = e.target.name;
     this.value = e.target.value;
+
     this.setState((prevState) => {
       return {
         guest: {
@@ -58,22 +69,38 @@ class App extends React.Component {
 
   handleSubmit = (event) => {
     // alert('A new guests was submitted: ' + this.state.name + ' | Age: ' + this.state.age);
-    this.setState({ unconfirmed: this.state.unconfirmed + 1 });
     event.preventDefault();
-    let lastGuest = this.state.guestArr[this.state.guestArr.length - 1];
+    this.setState({ unconfirmed: this.state.unconfirmed + 1 });
+    let lastGuest = this.state.guestArr.length;
 
-    this.setState((prevState) => {
-      const guestArr = prevState.guestArr.concat({
-        ...prevState.guest,
-        id: lastGuest.id + 1,
-        dateRegistered: moment().format("DD-MM-YYYY"),
-        timeRegistered: moment().format("hh:mm:ss")
-      });
+    const newGuest = [...this.state.guestArr];
+    newGuest.push({
+      id: lastGuest + 1,
+      nama: this.state.name,
+      umur: this.state.age,
+      dateRegistered: moment().format("DD-MM-YYYY"),
+      timeRegistered: moment().format("hh:mm:ss"),
+    });
 
-      return {
-        guestArr,
-        guest: {},
-      };
+    this.setState({ guestArr: newGuest });
+
+    // this.setState((prevState) => {
+    //   const guestArr = prevState.guestArr.concat({
+    //     ...prevState.guest,
+    //     id: lastGuest.id + 1,
+    //     dateRegistered: moment().format("DD-MM-YYYY"),
+    //     timeRegistered: moment().format("hh:mm:ss"),
+    //   });
+
+    //   return {
+    //     guestArr,
+    //     guest: {},
+    //   };
+    // });
+
+    this.setState({
+      name: "",
+      age: "",
     });
   };
 
@@ -103,20 +130,24 @@ class App extends React.Component {
               label="Guest Name"
               variant="standard"
               name="nama"
-              value={this.state.guest.nama}
-              // onChange={(name) => this.updateGuestName(name)}
-              onChange={this.handleChange}
+              value={this.state.name}
+              onChange={(name) => this.updateGuestName(name)}
+              //onChange={this.handleChange}
             />
             <TextField
               id="standard-basic"
               label="Guest Age"
               variant="standard"
               name="umur"
-              value={this.state.guest.umur}
-              // onChange={(age) => this.updateGuestAge(age)}
-              onChange={this.handleChange}
+              value={this.state.age}
+              onChange={(age) => this.updateGuestAge(age)}
+              //onChange={this.handleChange}
             />
-            <Button variant="contained" type="submit">
+            <Button
+              variant="contained"
+              type="submit"
+              disabled={!this.state.name || !this.state.age}
+            >
               SUBMIT
             </Button>
           </Box>
@@ -142,18 +173,10 @@ class App extends React.Component {
             </Grid>
             <h2>{this.state.name}</h2>
             <h2>{this.state.age}</h2>
-            <div>
-              {this.state.guestArr.map((guest) => (
-                <div key={guest.id}>
-                  <h3>{guest.id}</h3>
-                  <p>{guest.nama}</p>
-                  <p>{guest.umur}</p>
-                  <p>{guest.dateRegistered}</p>
-                  <p>{guest.timeRegistered}</p>
-                </div>
-              ))}
-            </div>
             <FormControlLabel control={<Checkbox />} label="Confirmed" />
+
+            {/* Guest Card */}
+            <ListCard value={this.state.guestArr} />
           </div>
         </Paper>
       </div>
