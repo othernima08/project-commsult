@@ -5,6 +5,8 @@ import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 export default function ListCard({ value, handleEdit, handleDelete }) {
   return (
@@ -21,18 +23,19 @@ export default function ListCard({ value, handleEdit, handleDelete }) {
                 Guest {guest.id}
               </Typography>
               <Divider />
-              <Typography sx={{ fontSize: 12 }} component="div">
+              <Typography sx={{ mt: 1.5, fontSize: 12 }} component="div">
                 Name
               </Typography>
-              <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              <Typography sx={{ fonSize: 20 }} color="text.secondary">
                 {guest.nama}
               </Typography>
-              <Typography sx={{ fontSize: 12 }} component="div">
+              <Typography sx={{ mt: 1.5, fontSize: 12 }} component="div">
                 Age
               </Typography>
               <Typography sx={{ mb: 1.5 }} color="text.secondary">
                 {guest.umur}
               </Typography>
+              <FormControlLabel control={<Checkbox />} label="Confirmed" />
               <p>{guest.dateRegistered}</p>
               <p>{guest.timeRegistered}</p>
               <Button variant="contained" onClick={() => handleEdit(guest.id, guest.nama, guest.umur)}>
@@ -47,9 +50,6 @@ export default function ListCard({ value, handleEdit, handleDelete }) {
                 REMOVE
               </Button>
             </CardContent>
-            <CardActions>
-              <Button size="small">Learn More</Button>
-            </CardActions>
           </Card>
         </div>
       ))}

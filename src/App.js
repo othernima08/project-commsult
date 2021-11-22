@@ -227,7 +227,7 @@ class App extends React.Component {
             {/* <h2>{this.state.name}</h2>
             <h2>{this.state.age}</h2>
             <p>{this.state.isUpdateStatus.toString()}</p> */}
-            <FormControlLabel control={<Checkbox />} label="Confirmed" />
+            {/* <FormControlLabel control={<Checkbox />} label="Confirmed" /> */}
 
           </div>
           {/* Guest Card */}
