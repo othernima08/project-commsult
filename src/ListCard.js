@@ -2,48 +2,45 @@ import React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+import Checkbox from "@mui/material/Checkbox";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 
-export default function ListCard({ value, handleEdit, handleDelete }) {
+export default function ListCard({ handleEdit, handleDelete, id, name, age, dateRegistered, timeRegistered}) {
   return (
-    <div className="list-card">
-      {value.map((guest) => (
-        <div key={guest.id}>
-          <Card sx={{ minWidth: 275 }}>
+          <Card sx={{ minWidth: 275 }} variant="outlined">
             <CardContent>
               <Typography
                 sx={{ fontSize: 20 }}
                 color="text.secondary"
                 gutterBottom
               >
-                Guest {guest.id}
+                Guest {id}
               </Typography>
               <Divider />
               <Typography sx={{ mt: 1.5, fontSize: 12 }} component="div">
                 Name
               </Typography>
               <Typography sx={{ fonSize: 20 }} color="text.secondary">
-                {guest.nama}
+                {name}
               </Typography>
               <Typography sx={{ mt: 1.5, fontSize: 12 }} component="div">
                 Age
               </Typography>
               <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                {guest.umur}
+                {age}
               </Typography>
               <FormControlLabel control={<Checkbox />} label="Confirmed" />
-              <p>{guest.dateRegistered}</p>
-              <p>{guest.timeRegistered}</p>
-              <Button variant="contained" onClick={() => handleEdit(guest.id, guest.nama, guest.umur)}>
+              <p>Registered on: {dateRegistered} {timeRegistered}</p>
+              <Button variant="contained" onClick={() => handleEdit(id, name, age)}>
                 EDIT
               </Button>
               <Button
                 variant="contained"
-                onClick={() => handleDelete(guest.id, guest.nama)}
+                onClick={() => handleDelete(id, name)}
                 sx={{ ml: 1.5 }}
                 color="error"
               >
@@ -51,8 +48,5 @@ export default function ListCard({ value, handleEdit, handleDelete }) {
               </Button>
             </CardContent>
           </Card>
-        </div>
-      ))}
-    </div>
   );
 }

@@ -10,6 +10,8 @@ import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import moment from "moment";
 import ListCard from "./ListCard";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
 
 class App extends React.Component {
   constructor(props) {
@@ -43,7 +45,7 @@ class App extends React.Component {
       //   },
       // ],
       isUpdateId: null,
-      isUpdateStatus: false
+      isUpdateStatus: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -80,7 +82,7 @@ class App extends React.Component {
 
   handleSubmit = (event) => {
     // alert('A new guests was submitted: ' + this.state.name + ' | Age: ' + this.state.age);
-    
+
     if (this.state.isUpdateStatus === true) {
       let id = this.state.isUpdateId;
       var guestArr = [...this.state.guestArr];
@@ -88,13 +90,12 @@ class App extends React.Component {
       guestArr[index].nama = this.state.name;
       guestArr[index].umur = this.state.age;
       this.setState({ guestArr });
-      alert('Guest ' + this.state.isUpdateId + ' updated');
-    }
-    else{
+      alert("Guest " + this.state.isUpdateId + " updated");
+    } else {
       event.preventDefault();
       this.setState({ unconfirmed: this.state.unconfirmed + 1 });
       this.setState({ count: this.state.count + 1 });
-  
+
       const newGuest = [...this.state.guestArr];
       newGuest.push({
         id: this.state.count,
@@ -103,9 +104,9 @@ class App extends React.Component {
         dateRegistered: moment().format("DD-MM-YYYY"),
         timeRegistered: moment().format("hh:mm:ss"),
       });
-  
+
       this.setState({ guestArr: newGuest });
-  
+
       // this.setState((prevState) => {
       //   const guestArr = prevState.guestArr.concat({
       //     ...prevState.guest,
@@ -113,7 +114,7 @@ class App extends React.Component {
       //     dateRegistered: moment().format("DD-MM-YYYY"),
       //     timeRegistered: moment().format("hh:mm:ss"),
       //   });
-  
+
       //   return {
       //     guestArr,
       //     guest: {},
@@ -124,7 +125,7 @@ class App extends React.Component {
       name: "",
       age: "",
     });
-    this.setState({isUpdateStatus: false});
+    this.setState({ isUpdateStatus: false });
   };
 
   handleDelete(id, name) {
@@ -138,8 +139,8 @@ class App extends React.Component {
   handleEdit = (id, name, age) => {
     this.setState({ name: name });
     this.setState({ age: age });
-    this.setState({ isUpdateStatus: true});
-    this.setState({ isUpdateId: id});
+    this.setState({ isUpdateStatus: true });
+    this.setState({ isUpdateId: id });
   };
 
   editSubmitted = (id) => {
@@ -192,15 +193,21 @@ class App extends React.Component {
             <Button
               variant="contained"
               type="submit"
-              disabled={!this.state.name || !this.state.age || this.state.isUpdateStatus}
+              disabled={
+                !this.state.name || !this.state.age || this.state.isUpdateStatus
+              }
             >
               SUBMIT
             </Button>
             <Button
-            variant="contained"
-            onClick={this.handleSubmit}
-            disabled={!this.state.name || !this.state.age || this.state.isUpdateStatus === false}
-            >  
+              variant="contained"
+              onClick={this.handleSubmit}
+              disabled={
+                !this.state.name ||
+                !this.state.age ||
+                this.state.isUpdateStatus === false
+              }
+            >
               EDIT
             </Button>
           </Box>
@@ -214,24 +221,39 @@ class App extends React.Component {
                 <FormGroup>
                   <FormControlLabel
                     control={<Checkbox />}
-                    label="Hide uncomfirmed guest"
+                    label="Hide unconfirmed guest"
                   />
                 </FormGroup>
               </Grid>
               <Grid item xs={6} sx={{ textAlign: "right" }}>
                 <h4>Confirmed: {this.state.confirmed}</h4>
-                <h4>Uncomfirmed: {this.state.unconfirmed}</h4>
+                <h4>Unconfirmed: {this.state.unconfirmed}</h4>
                 <h4>Total: {this.state.confirmed + this.state.unconfirmed}</h4>
               </Grid>
             </Grid>
             {/* <h2>{this.state.name}</h2>
             <h2>{this.state.age}</h2>
             <p>{this.state.isUpdateStatus.toString()}</p> */}
-            {/* <FormControlLabel control={<Checkbox />} label="Confirmed" /> */}
-
           </div>
           {/* Guest Card */}
-          <Grid container spacing={2}>
+          <ImageList cols={3}>
+            {this.state.guestArr.map((item) => (
+              <ImageListItem key={item.id}>
+                <ListCard
+                value={this.state.guestArr}
+                handleDelete={this.handleDelete}
+                handleEdit={this.handleEdit}
+                id={item.id}
+                name={item.nama}
+                age={item.umur}
+                dateRegistered={item.dateRegistered}
+                timeRegistered={item.timeRegistered}
+              />
+              </ImageListItem>
+            ))}
+          </ImageList>
+
+          {/* Grid container spacing={2}>
             <Grid item xs={4}>
               <ListCard
                 value={this.state.guestArr}
@@ -239,7 +261,7 @@ class App extends React.Component {
                 handleEdit={this.handleEdit}
               />
             </Grid>
-          </Grid>
+          </Grid> */}
 
           {/* {this.state.guestArr.map((guest) => (
             <div key={guest.id}>
