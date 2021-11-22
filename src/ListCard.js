@@ -35,12 +35,12 @@ export default function ListCard({ value, handleEdit, handleDelete }) {
               </Typography>
               <p>{guest.dateRegistered}</p>
               <p>{guest.timeRegistered}</p>
-              <Button variant="contained" onClick={() => handleEdit(guest.id)}>
+              <Button variant="contained" onClick={() => handleEdit(guest.id, guest.nama, guest.umur)}>
                 EDIT
               </Button>
               <Button
                 variant="contained"
-                onCLick={() => handleDelete(guest.id)}
+                onClick={() => handleDelete(guest.id, guest.nama)}
                 sx={{ ml: 1.5 }}
                 color="error"
               >

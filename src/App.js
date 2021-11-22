@@ -34,11 +34,22 @@ class App extends React.Component {
       guest: {},
       confirmed: 0,
       unconfirmed: 0,
+      count: 1,
       isSubmitted: false,
+      // isUpdate: [
+      //   {
+      //     id: null,
+      //     status: false,
+      //   },
+      // ],
+      isUpdateId: null,
+      isUpdateStatus: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
   updateGuestName(name) {
@@ -69,39 +80,74 @@ class App extends React.Component {
 
   handleSubmit = (event) => {
     // alert('A new guests was submitted: ' + this.state.name + ' | Age: ' + this.state.age);
-    event.preventDefault();
-    this.setState({ unconfirmed: this.state.unconfirmed + 1 });
-    let lastGuest = this.state.guestArr.length;
-
-    const newGuest = [...this.state.guestArr];
-    newGuest.push({
-      id: lastGuest + 1,
-      nama: this.state.name,
-      umur: this.state.age,
-      dateRegistered: moment().format("DD-MM-YYYY"),
-      timeRegistered: moment().format("hh:mm:ss"),
-    });
-
-    this.setState({ guestArr: newGuest });
-
-    // this.setState((prevState) => {
-    //   const guestArr = prevState.guestArr.concat({
-    //     ...prevState.guest,
-    //     id: lastGuest.id + 1,
-    //     dateRegistered: moment().format("DD-MM-YYYY"),
-    //     timeRegistered: moment().format("hh:mm:ss"),
-    //   });
-
-    //   return {
-    //     guestArr,
-    //     guest: {},
-    //   };
-    // });
-
+    
+    if (this.state.isUpdateStatus === true) {
+      let id = this.state.isUpdateId;
+      var guestArr = [...this.state.guestArr];
+      var index = guestArr.findIndex((obj) => obj.id === id);
+      guestArr[index].nama = this.state.name;
+      guestArr[index].umur = this.state.age;
+      this.setState({ guestArr });
+      alert('Guest ' + this.state.isUpdateId + ' updated');
+    }
+    else{
+      event.preventDefault();
+      this.setState({ unconfirmed: this.state.unconfirmed + 1 });
+      this.setState({ count: this.state.count + 1 });
+  
+      const newGuest = [...this.state.guestArr];
+      newGuest.push({
+        id: this.state.count,
+        nama: this.state.name,
+        umur: this.state.age,
+        dateRegistered: moment().format("DD-MM-YYYY"),
+        timeRegistered: moment().format("hh:mm:ss"),
+      });
+  
+      this.setState({ guestArr: newGuest });
+  
+      // this.setState((prevState) => {
+      //   const guestArr = prevState.guestArr.concat({
+      //     ...prevState.guest,
+      //     id: lastGuest.id + 1,
+      //     dateRegistered: moment().format("DD-MM-YYYY"),
+      //     timeRegistered: moment().format("hh:mm:ss"),
+      //   });
+  
+      //   return {
+      //     guestArr,
+      //     guest: {},
+      //   };
+      // });
+    }
     this.setState({
       name: "",
       age: "",
     });
+    this.setState({isUpdateStatus: false});
+  };
+
+  handleDelete(id, name) {
+    alert("Remove guest " + name + "?");
+    this.setState((prevState) => {
+      const guestArr = prevState.guestArr.filter((guest) => guest.id !== id);
+      return { guestArr };
+    });
+  }
+
+  handleEdit = (id, name, age) => {
+    this.setState({ name: name });
+    this.setState({ age: age });
+    this.setState({ isUpdateStatus: true});
+    this.setState({ isUpdateId: id});
+  };
+
+  editSubmitted = (id) => {
+    var guestArr = [...this.state.guestArr];
+    var index = guestArr.findIndex((obj) => obj.id === id);
+    guestArr[index].nama = this.state.name;
+    guestArr[index].umur = this.state.age;
+    this.setState({ guestArr });
   };
 
   render() {
@@ -146,9 +192,16 @@ class App extends React.Component {
             <Button
               variant="contained"
               type="submit"
-              disabled={!this.state.name || !this.state.age}
+              disabled={!this.state.name || !this.state.age || this.state.isUpdateStatus}
             >
               SUBMIT
+            </Button>
+            <Button
+            variant="contained"
+            onClick={this.handleSubmit}
+            disabled={!this.state.name || !this.state.age || this.state.isUpdateStatus === false}
+            >  
+              EDIT
             </Button>
           </Box>
         </Paper>
@@ -171,13 +224,32 @@ class App extends React.Component {
                 <h4>Total: {this.state.confirmed + this.state.unconfirmed}</h4>
               </Grid>
             </Grid>
-            <h2>{this.state.name}</h2>
+            {/* <h2>{this.state.name}</h2>
             <h2>{this.state.age}</h2>
+            <p>{this.state.isUpdateStatus.toString()}</p> */}
             <FormControlLabel control={<Checkbox />} label="Confirmed" />
 
-            {/* Guest Card */}
-            <ListCard value={this.state.guestArr} />
           </div>
+          {/* Guest Card */}
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <ListCard
+                value={this.state.guestArr}
+                handleDelete={this.handleDelete}
+                handleEdit={this.handleEdit}
+              />
+            </Grid>
+          </Grid>
+
+          {/* {this.state.guestArr.map((guest) => (
+            <div key={guest.id}>
+              <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <ListCard value={this.state.guestArr} handleDelete={this.handleDelete} />
+              </Grid>
+          </Grid>
+            </div>
+          ))} */}
         </Paper>
       </div>
     );
