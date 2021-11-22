@@ -2,6 +2,9 @@ import React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+import Checkbox from "@mui/material/Checkbox";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -35,6 +38,12 @@ export default function ListCard({ value, handleEdit, handleDelete }) {
               </Typography>
               <p>{guest.dateRegistered}</p>
               <p>{guest.timeRegistered}</p>
+              <FormGroup>
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label="Confirm"
+                  />
+              </FormGroup>
               <Button variant="contained" onClick={() => handleEdit(guest.id, guest.nama, guest.umur)}>
                 EDIT
               </Button>

@@ -214,20 +214,19 @@ class App extends React.Component {
                 <FormGroup>
                   <FormControlLabel
                     control={<Checkbox />}
-                    label="Hide uncomfirmed guest"
+                    label="Hide unconfirmed guest"
                   />
                 </FormGroup>
               </Grid>
               <Grid item xs={6} sx={{ textAlign: "right" }}>
                 <h4>Confirmed: {this.state.confirmed}</h4>
-                <h4>Uncomfirmed: {this.state.unconfirmed}</h4>
+                <h4>Unconfirmed: {this.state.unconfirmed}</h4>
                 <h4>Total: {this.state.confirmed + this.state.unconfirmed}</h4>
               </Grid>
             </Grid>
             {/* <h2>{this.state.name}</h2>
             <h2>{this.state.age}</h2>
             <p>{this.state.isUpdateStatus.toString()}</p> */}
-            <FormControlLabel control={<Checkbox />} label="Confirmed" />
 
           </div>
           {/* Guest Card */}
